@@ -27,7 +27,7 @@ USE_L10N = False
 USE_TZ = True
 
 DATE_FORMAT = 'd.m.Y'
-DATETIME_FORMAT = 'd.m.Y - H:i:s  O'
+DATETIME_FORMAT = 'd.m.Y - H:i:s'
 TIME_FORMAT = 'H:i:s'
 
 DATABASES = {
@@ -44,7 +44,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'moddjango',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -59,10 +58,6 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'main.urls'
 
-#TEMPLATE_DIRS = (
-#    os.path.join(BASE_DIR, 'main/templates/'),
-#    os.path.join(BASE_DIR, 'stories/templates/'),
-#    os.path.join(BASE_DIR, 'comments/templates/'),
-#)
-
 WSGI_APPLICATION = 'main.wsgi.application'
+
+from moddjango.settings import * 
