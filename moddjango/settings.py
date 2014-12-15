@@ -11,5 +11,6 @@ INSTALLED_APPS += (
 )
 
 TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, 'posts/templates/'),
+#    os.path.join(BASE_DIR, 'posts/templates/'),
+    os.path.join(BASE_DIR, 'moddjango/templates/'),
 )

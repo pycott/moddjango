@@ -1,8 +1,9 @@
 from django.conf.urls import patterns, include, url
-from main.urls import urlpatterns
 
 
-urlpatterns += patterns('',
+urlpatterns = patterns('moddjango.views',
+    url(r'^$', 'index', name='index'),
+    url(r'^management/$', 'management',  name='management'),
 #    url(r'^posts/', include(
 #        'posts.urls',
 #        namespace='posts',

@@ -1,0 +1,14 @@
+{% extends 'moddjango/base.html' %}
+
+{% block title %}
+    moddjango || management modules
+{% endblock %}
+
+{% block content %}
+  {% for module in modules %}
+    <hr>
+    {% include 'moddjango/parts/module.html' %}
+  {% endfor %}
+{% endblock %}
+
+
