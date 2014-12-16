@@ -9,11 +9,10 @@ DOWNLOAD_DIR = os.path.join(MODDJANGO_DIR, 'download')
 
 
 INSTALLED_APPS += (
-'posts',
     'moddjango',
 )
 
 TEMPLATE_DIRS += (
-os.path.join(BASE_DIR, 'posts/templates/'),
+#    os.path.join(BASE_DIR, 'posts/templates/'),
     os.path.join(BASE_DIR, 'moddjango/templates/'),
 )

@@ -8,7 +8,7 @@ def index(request):
 
 
 def management(request):
-    ModDjango().db_update() 
-    modules = Module.objects.all()
+    ModDjango().add_downloaded_to_db() 
+    modules = Module.objects.exclude(status='none')
     return render(request, 'moddjango/management.html', {
         'modules': modules})

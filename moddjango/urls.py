@@ -1,11 +1,11 @@
-from django.conf.urls import patterns, include, url
+import sys
 
+globals().update(vars(sys.modules['main.urls']))
 
-urlpatterns = patterns('moddjango.views',
-    url(r'^$', 'index', name='index'),
-    url(r'^management/$', 'management',  name='management'),
-#    url(r'^posts/', include(
-#        'posts.urls',
-#        namespace='posts',
-#        app_name='posts')),
+urlpatterns += patterns('',
+url(r'^posts/', include('posts.urls', namespace='posts', app_name='posts')),
+	url(r'^moddjango/', include(
+	    'moddjango.core_urls',
+	    namespace='moddjango',
+	    app_name='moddjango')),
 )

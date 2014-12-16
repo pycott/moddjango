@@ -3,10 +3,6 @@ from django.contrib import admin
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
-
-    url(r'^moddjango/', include(
-        'moddjango.urls',
-        namespace='moddjango',
-        app_name='moddjango')),
 )
 
+from moddjango.urls import *
