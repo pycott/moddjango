@@ -65,6 +65,8 @@ class ModDjango:
     def turn_on(self):
         if self.module.status != 'installed':
             return False
+        if not self.__is_satisfied_depending():
+            raise Exception('not satisfied depending')
         in_file = self.__SETTINGS
         #add in installed apps
         add_line = "'{0}',{1}".format(self.name, os.linesep)
@@ -95,6 +97,10 @@ class ModDjango:
 
 
     def turn_off(self):
+        if self.module.status != 'on':
+            return False
+        if not self.__is_depending_disabled():
+            raise Exception('depending not disabled')
         #del from installed apps
         from_file = self.__SETTINGS
         del_line = "'{0}',{1}".format(self.name, os.linesep)
@@ -166,6 +172,16 @@ class ModDjango:
             for module in turn_on_modules:
                 if not depend.name in module.name:
                     return False
+        return True
+
+
+    def __is_depending_disabled(self):
+        related_dependence = self.module.related_dependence.all()
+        if not related_dependence:
+            return True
+        for module in related_dependence:
+            if module.status == 'on':
+                return False
         return True
 
 

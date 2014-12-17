@@ -13,4 +13,5 @@ class Module(models.Model):
         "self",
         symmetrical=False,
         blank=True,
-        null=True)
+        null=True,
+        related_name='related_dependence')
