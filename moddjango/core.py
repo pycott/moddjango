@@ -51,9 +51,11 @@ class ModDjango:
         return True
 
 
-    def delete(self):
+    def uninstall(self):
         shutil.rmtree(self.name)
         if not os.path.exists(self.name):
+            self.module.status = 'downloaded'
+            self.module.save()
             return True
         return False
 
@@ -73,12 +75,13 @@ class ModDjango:
             after_line = 'TEMPLATE_DIRS += ('
             self.__add_line_in_file(add_line, after_line, in_file)
         #add in urls
-        add_line = \
-            "url(r'^{0}/', include('{0}.urls', namespace='{0}', app_name='{0}')),{1}"\
-            .format(self.name, os.linesep)
-        after_line = "urlpatterns += patterns('',"
-        in_file = self.__URLSCONF
-        self.__add_line_in_file(add_line, after_line, in_file)
+        if self.module.urls:
+            add_line = \
+                "url(r'^{0}/', include('{0}.urls', namespace='{0}', app_name='{0}')),{1}"\
+                .format(self.name, os.linesep)
+            after_line = "urlpatterns += patterns('',"
+            in_file = self.__URLSCONF
+            self.__add_line_in_file(add_line, after_line, in_file)
         #migrate
         if self.module.migrate:
             os.system('python manage.py makemigrations {0}'.format(self.name))
@@ -100,11 +103,12 @@ class ModDjango:
                 .format(self.name, os.linesep)
             self.__del_line_from_file(del_line, from_file)
         #del urls
-        from_file = self.__URLSCONF
-        del_line = \
-            "url(r'^{0}/', include('{0}.urls', namespace='{0}', app_name='{0}')),{1}"\
-            .format(self.name, os.linesep)
-        self.__del_line_from_file(del_line, from_file)
+        if self.module.urls:
+            from_file = self.__URLSCONF
+            del_line = \
+                "url(r'^{0}/', include('{0}.urls', namespace='{0}', app_name='{0}')),{1}"\
+                .format(self.name, os.linesep)
+            self.__del_line_from_file(del_line, from_file)
         #change status
         self.module.status = 'installed'
         self.module.save()

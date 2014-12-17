@@ -1,0 +1,34 @@
+#management-modules-form{
+  margin-top: 20px;
+}
+
+.row-same-height {
+  display: table;
+  width: 100%;
+}
+
+.col-xs-1.management-module{
+  min-width:72px;
+}
+
+.col-same-height {
+  float: none;
+  display: table-cell;
+  vertical-align: top;
+}
+
+.control-radio > .radio {
+  padding-top: 0px;
+}
+
+.top-buffer{
+  padding-top:10px;
+}
+
+.bottom-buffer{
+  padding-bottom:10px;
+}
+
+.light-border-bottom{
+  border-bottom: 1px solid #e5e5e5;
+}

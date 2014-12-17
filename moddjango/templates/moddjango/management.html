@@ -4,11 +4,23 @@
     moddjango || management modules
 {% endblock %}
 
+{% block nav_management %}active{% endblock %}
+
 {% block content %}
+<form id="management-modules-form" class="form-horizontal" method="post" action="{% url 'moddjango:management' %}">
+  {% csrf_token %}
+  <h1>Управление модулями</h1>
   {% for module in modules %}
-    <hr>
-    {% include 'moddjango/parts/module.html' %}
+    {% include 'moddjango/parts/management-module.html' %}
   {% endfor %}
+  <div class="form-group pull-right top-buffer">
+    <div class="col-xs-1">
+      <button id="submit" name="submit" class="btn btn-primary">Применить</button>
+    </div>
+  </div>
+</form>
 {% endblock %}
+
+
 
 

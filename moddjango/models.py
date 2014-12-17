@@ -8,6 +8,7 @@ class Module(models.Model):
     status = models.CharField(max_length = 10, default='downloaded')
     migrate = models.BooleanField(default=False)
     templates = models.BooleanField(default=False)
+    urls = models.BooleanField(default=False)
     dependence = models.ManyToManyField(
         "self",
         symmetrical=False,
