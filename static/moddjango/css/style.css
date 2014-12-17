@@ -8,7 +8,8 @@
 }
 
 .col-xs-1.management-module{
-  max-width:72px;
+  max-width: 110px;
+  min-width: 110px;
 }
 
 .col-same-height {
@@ -35,4 +36,8 @@
 
 .light-border-bottom{
   border-bottom: 1px solid #e5e5e5;
+}
+
+.btn.management-module{
+  margin-top: 10px;
 }

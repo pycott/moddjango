@@ -1,72 +1,81 @@
-<fieldset class="top-buffer bottom-buffer light-border-bottom">
-  <div class="row row-same-height">
-    <div class="col-xs-1 col-same-height management-module">
-      <div class="form-group">
-        <div class="col-md-4">
-        <div class="control-radio">
-          <div class="radio">
-            <label for="{{ module.name }}-none">
-              <input name="{{ module.name }}" id="{{ module.name }}-none" value="none" checked="checked" type="radio" checked="checked">
-              none
-            </label>
+<form class="form-horizontal" method="post" action="{% url 'moddjango:management' %}">
+  {% csrf_token %}
+  <fieldset class="top-buffer bottom-buffer light-border-bottom">
+    <div class="row row-same-height">
+      <div class="col-xs-1 col-same-height management-module">
+        <div class="form-group">
+          <div class="col-md-4">
+          <div class="control-radio">
+            <div class="radio">
+              <input name="name" id="{{ module.name }}-name" value="{{ module.name }}" type="hidden">
+              <label for="{{ module.name }}-none">
+                <input name="status" id="{{ module.name }}-none" value="none" checked="checked" type="radio" checked="checked">
+                none
+              </label>
+            </div>
+            {% if module.status == 'downloaded' %}
+              <div class="radio">
+                <label for="{{ module.name }}-install">
+                  <input name="status" id="{{ module.name }}-install" value="install" type="radio">
+                  install
+                </label>
+              </div>
+            {% endif %}
+            {% if module.status == 'installed' %}
+              <div class="radio">
+                <label for="{{ module.name }}-uninstall">
+                  <input name="status" id="{{ module.name }}-uninstall" value="uninstall" type="radio">
+                  uninstall
+                </label>
+              </div>
+              <div class="radio">
+                <label for="{{ module.name }}-on">
+                  <input name="status" id="{{ module.name }}-on" value="on" type="radio">
+                  on
+                </label>
+              </div>
+            {% endif %}
+            {% if module.status == 'on' %}
+              <div class="radio">
+                <label for="{{ module.name }}-off">
+                  <input name="status" id="{{ module.name }}-off" value="off" type="radio">
+                  off
+                </label>
+              </div>
+            {% endif %}
           </div>
-          {% if module.status == 'downloaded' %}
-            <div class="radio">
-              <label for="{{ module.name }}-install">
-                <input name="{{ module.name }}" id="{{ module.name }}-install" value="install" type="radio">
-                install
-              </label>
-            </div>
-          {% endif %}
-          {% if module.status == 'installed' %}
-            <div class="radio">
-              <label for="{{ module.name }}-uninstall">
-                <input name="{{ module.name }}" id="{{ module.name }}-uninstall" value="uninstall" type="radio">
-                uninstall
-              </label>
-            </div>
-            <div class="radio">
-              <label for="{{ module.name }}-on">
-                <input name="{{ module.name }}" id="{{ module.name }}-on" value="on" type="radio">
-                on
-              </label>
-            </div>
-          {% endif %}
-          {% if module.status == 'on' %}
-            <div class="radio">
-              <label for="{{ module.name }}-off">
-                <input name="{{ module.name }}" id="{{ module.name }}-off" value="off" type="radio">
-                off
-              </label>
-            </div>
-          {% endif %}
+          </div>
         </div>
+        <div class="form-group">
+          <div class="col-xs-1">
+            <button name="submit" class="btn btn-primary management-module">Применить</button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="col-xs-11 col-same-height">
-      <strong>Название:</strong> {{ module.name }} <br>
-      <strong>Описание:</strong> {{ module.description }} <br>
-      <strong>Статус:</strong> {{ module.status }} <br>
-      <strong>Версия:</strong> {{ module.version }} <br>
-      <strong>Зависимости:</strong> 
-        {% for module in module.dependence.all %}
-          {{ module.name }};
-        {% empty %}
-          нет
-        {% endfor %}
-        <br>
-      <strong>Прочее:</strong>
-        {% if module.migrate %}
-          работает с базой данных;
-        {% endif %}
-        {% if module.templates %}
-          предоставляет шаблоны;
-        {% endif %}
-        {% if module.urls %}
-          предоставляет дополнительные ссылки;
-        {% endif %}
+      <div class="col-xs-11 col-same-height">
+        <strong>Название:</strong> {{ module.name }} <br>
+        <strong>Описание:</strong> {{ module.description }} <br>
+        <strong>Статус:</strong> {{ module.status }} <br>
+        <strong>Версия:</strong> {{ module.version }} <br>
+        <strong>Зависимости:</strong> 
+          {% for module in module.dependence.all %}
+            {{ module.name }};
+          {% empty %}
+            нет
+          {% endfor %}
+          <br>
+        <strong>Прочее:</strong>
+          {% if module.migrate %}
+            работает с базой данных;
+          {% endif %}
+          {% if module.templates %}
+            предоставляет шаблоны;
+          {% endif %}
+          {% if module.urls %}
+            предоставляет дополнительные ссылки;
+          {% endif %}
+      </div>
     </div>
-  </div>
-</fieldset>
+  </fieldset>
+</form>

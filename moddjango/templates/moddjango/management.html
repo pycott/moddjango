@@ -7,20 +7,22 @@
 {% block nav_management %}active{% endblock %}
 
 {% block content %}
-<form id="management-modules-form" class="form-horizontal" method="post" action="{% url 'moddjango:management' %}">
-  {% csrf_token %}
   <h1>Управление модулями</h1>
+
+  {% if form.errors %}
+    {% for field, errors in form.errors.items %}
+      {% for error in errors %}
+        <div class="text-danger">{{ error }}</div>
+      {% endfor %}
+    {% endfor %}
+
+  {% endif %}
+  
   {% for module in modules %}
     {% include 'moddjango/parts/management-module.html' %}
   {% empty %}
      Ниодного модуля не найдено. Попробуйте положить модуль в папку 'moddjango/download'
   {% endfor %}
-  <div class="form-group pull-right top-buffer">
-    <div class="col-xs-1">
-      <button id="submit" name="submit" class="btn btn-primary">Применить</button>
-    </div>
-  </div>
-</form>
 {% endblock %}
 
 

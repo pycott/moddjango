@@ -44,8 +44,6 @@ class ModDjango:
 
     def install(self):
         __info = self.__info()
-        if not self.__is_satisfied_depending():
-            raise Exception('not satisfied depending')
         if not self.__unpack():
             raise Exception('full path not found')
         self.module.status = 'installed'
@@ -56,10 +54,10 @@ class ModDjango:
     def uninstall(self):
         shutil.rmtree(self.name)
         if not os.path.exists(self.name):
-            self.module.status = 'downloaded'
-            self.module.save()
-            return True
-        return False
+            return False
+        self.module.status = 'downloaded'
+        self.module.save()
+        return True
 
 
     def turn_on(self):
