@@ -29,14 +29,16 @@ class ModDjango:
         for module_name in down_not_in_db:
             self.name = module_name
             self.filename = str(module_name)+'.tar.gz'
-            module___info = self.__info()
-            dependencies = set(module___info.pop('dependencies'))
+            module_info = self.__info()
+            dependencies = set(module_info.pop('dependencies'))
+            new_module, created = Module.objects.update_or_create(
+                name = module_info.get('name'),
+                defaults = module_info)
             dependencies_not_in_db = dependencies.difference(db_names)
-            new_module = Module.objects.create(**module___info)
             for module_name in dependencies_not_in_db:
-                depend_module = Module.objects.create(
-                    name=module_name,
-                    status='none')
+                depend_module, created = Module.objects.get_or_create(
+                    name = module_name,
+                    defaults = {'status':'none'})
                 new_module.dependence.add(depend_module)
 
 
@@ -158,6 +160,8 @@ class ModDjango:
     def __is_satisfied_depending(self):
         turn_on_modules = Module.objects.filter(status='on')    
         dependencies = self.module.dependence.all()
+        if dependencies and not turn_on_modules:
+            return False
         for depend in dependencies:
             for module in turn_on_modules:
                 if not depend.name in module.name:

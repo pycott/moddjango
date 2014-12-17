@@ -4,10 +4,16 @@
       <div class="form-group">
         <div class="col-md-4">
         <div class="control-radio">
+          <div class="radio">
+            <label for="{{ module.name }}-none">
+              <input name="{{ module.name }}" id="{{ module.name }}-none" value="none" checked="checked" type="radio" checked="checked">
+              none
+            </label>
+          </div>
           {% if module.status == 'downloaded' %}
             <div class="radio">
               <label for="{{ module.name }}-install">
-                <input name="{{ module.name }}" id="{{ module.name }}-install" value="install" checked="checked" type="radio">
+                <input name="{{ module.name }}" id="{{ module.name }}-install" value="install" type="radio">
                 install
               </label>
             </div>
@@ -59,7 +65,7 @@
           предоставляет шаблоны;
         {% endif %}
         {% if module.urls %}
-          предоставляет дополнительные страницы;
+          предоставляет дополнительные ссылки;
         {% endif %}
     </div>
   </div>

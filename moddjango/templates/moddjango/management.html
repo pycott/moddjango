@@ -12,6 +12,8 @@
   <h1>Управление модулями</h1>
   {% for module in modules %}
     {% include 'moddjango/parts/management-module.html' %}
+  {% empty %}
+     Ниодного модуля не найдено. Попробуйте положить модуль в папку 'moddjango/download'
   {% endfor %}
   <div class="form-group pull-right top-buffer">
     <div class="col-xs-1">

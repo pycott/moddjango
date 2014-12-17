@@ -11,8 +11,16 @@
         <h1>ModDjango administration</h1>
     </div>
     <div class="row">
-        <section class="col-lg-12">
-            <p>Добро пожаловать в административную панель системой управления модулей ModDjango</p>
+        <section class="col-xs-12">
+            <p>Добро пожаловать в административную панель системы управления модулей ModDjango.</p>
+            <p>На странице "Управление модулями" вы можете устанавливать, удалять, включать и отключать модули.</p>
+            {% if modules %}
+              <p>Текущие включенные модули:
+                {% for module in modules %}
+                  <a href="/{{ module.name }}/">{{ module.name }}</a>;
+                {% endfor %}
+              </p>
+            {% endif %}
         </section>
     </div>
 {% endblock %}

@@ -1,0 +1,8 @@
+{
+    "name":"first_post",
+    "description":"просто показывает первый пост на странице",
+    "version":"0.1.2",
+    "dependencies":["posts"],
+    "templates":"True",
+    "urls":"True"
+}

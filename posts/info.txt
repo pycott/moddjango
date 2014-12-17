@@ -4,5 +4,6 @@
     "version":"0.1",
     "dependencies":[],
     "migrate":"True",
-    "templates":"True"
+    "templates":"True",
+    "urls":"True"
 }

@@ -8,7 +8,7 @@
 }
 
 .col-xs-1.management-module{
-  min-width:72px;
+  max-width:72px;
 }
 
 .col-same-height {
@@ -27,6 +27,10 @@
 
 .bottom-buffer{
   padding-bottom:10px;
+}
+
+.left-buffer{
+  padding-left:10px;
 }
 
 .light-border-bottom{
