@@ -1,4 +1,4 @@
-import os, time, json, shutil
+import os, time, json, shutil, tarfile
 from moddjango.settings import DOWNLOAD_DIR, MODDJANGO_DIR, SERVER_REBOOT_CMD
 from moddjango.models import Module
 from main.settings import BASE_DIR
@@ -153,8 +153,8 @@ class ModDjango:
 
     def __info(self):
         full_path = self.__arc_full_path() 
-        cmd = 'tar xzvf {0} info.txt -O'.format(full_path)
-        data = json.load(os.popen(cmd))
+        with tarfile.open(full_path) as tar:
+            data = json.load(tar.extractfile('info.txt'))
         return data
 
 
@@ -186,9 +186,8 @@ class ModDjango:
             path_installed_module = os.path.join(BASE_DIR, self.name)
             if os.path.exists(path_installed_module):
                 raise Exception("was unable to unpack")
-            os.mkdir(self.name)
-            cmd = 'tar xzvf {0} -C {1}'.format(full_path, self.name)
-            os.popen(cmd)
+            with tarfile.open(full_path, 'r:gz') as tar:
+                tar.extractall(path_installed_module)
             if os.path.exists(path_installed_module):
                 return True
             else:
