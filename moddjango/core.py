@@ -1,8 +1,5 @@
-import os
-import time
-import json
-import shutil
-from moddjango.settings import DOWNLOAD_DIR, MODDJANGO_DIR
+import os, time, json, shutil
+from moddjango.settings import DOWNLOAD_DIR, MODDJANGO_DIR, SERVER_REBOOT_CMD
 from moddjango.models import Module
 from main.settings import BASE_DIR
 
@@ -199,5 +196,8 @@ class ModDjango:
 
 
     def __reboot_server(self):
-        touch_file = os.path.join(MODDJANGO_DIR, 'models.py')
-        os.utime(touch_file, (0, time.time()))
+        if SERVER_REBOOT_CMD:
+            os.system(SERVER_REBOOT_CMD)
+        else:
+            touch_file = os.path.join(MODDJANGO_DIR, 'models.py')
+            os.utime(touch_file, (0, time.time()))
