@@ -1,5 +1,9 @@
-{% extends 'posts/base.html' %}
+{% extends 'first_post/base.html' %}
 {% block content %}
-  {{ post.id }}
+<h1>Самый первый пост</h1>
+<h2>{{ post.title }}</h2>
+<p>{{ post.description }}</p>
+<p>{{ post.text }}</p>
+<p>{{ post.created_on }}</p>
 {% endblock %}
 

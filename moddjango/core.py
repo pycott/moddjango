@@ -4,6 +4,7 @@ import json
 import shutil
 from moddjango.settings import DOWNLOAD_DIR, MODDJANGO_DIR
 from moddjango.models import Module
+from main.settings import BASE_DIR
 
 
 class ModDjango:
@@ -43,21 +44,19 @@ class ModDjango:
 
 
     def install(self):
+        self.__unpack()
         __info = self.__info()
-        if not self.__unpack():
-            raise Exception('full path not found')
         self.module.status = 'installed'
         self.module.save()
-        return True
 
 
     def uninstall(self):
         shutil.rmtree(self.name)
         if not os.path.exists(self.name):
-            return False
-        self.module.status = 'downloaded'
-        self.module.save()
-        return True
+            self.module.status = 'downloaded'
+            self.module.save()
+            return True
+        return False
 
 
     def turn_on(self):
@@ -145,20 +144,21 @@ class ModDjango:
         shutil.move(self.__NEW_SETTINGS, from_file) 
 
 
-    def __full_path(self):
+    def __arc_full_path(self):
         if self.name:
-            return os.path.join(DOWNLOAD_DIR, self.filename) 
+            arc_full_path = os.path.join(DOWNLOAD_DIR, self.filename) 
+            if not os.path.exists(arc_full_path):
+                raise Exception('not found module archive')
+            return arc_full_path
         else:
             return False
 
 
     def __info(self):
-        full_path = self.__full_path() 
-        if full_path:
-            cmd = 'tar xzvf {0} info.txt -O'.format(full_path)
-            data = json.load(os.popen(cmd))
-            return data
-        return False
+        full_path = self.__arc_full_path() 
+        cmd = 'tar xzvf {0} info.txt -O'.format(full_path)
+        data = json.load(os.popen(cmd))
+        return data
 
 
     def __is_satisfied_depending(self):
@@ -184,13 +184,18 @@ class ModDjango:
 
 
     def __unpack(self):
-        full_path = self.__full_path() 
+        full_path = self.__arc_full_path() 
         if full_path:
+            path_installed_module = os.path.join(BASE_DIR, self.name)
+            if os.path.exists(path_installed_module):
+                raise Exception("was unable to unpack")
             os.mkdir(self.name)
             cmd = 'tar xzvf {0} -C {1}'.format(full_path, self.name)
             os.popen(cmd)
-            return True
-        return False
+            if os.path.exists(path_installed_module):
+                return True
+            else:
+                raise Exception("was unable to unpack")
 
 
     def __reboot_server(self):
